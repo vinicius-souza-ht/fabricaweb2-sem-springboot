@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"   >
+
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:include src="menu.xhtml" />
+
+    <h:form>
+        <p:dataTable id="checkboxDT" var="linhaSel" value="#{graficoInterativoController.linhasList}"
+                     selection="#{graficoInterativoController.linhasSelecionadasList}"
+                     rowKey="#{linhaSel.id}" style="margin-bottom:0">
+
+            <f:facet name="header">
+                Linhas
+            </f:facet>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column headerText="Id">
+                <h:outputText value="#{linhaSel.id}" />
+            </p:column>
+            <p:column headerText="Label">
+                <h:outputText value="#{linhaSel.linha.label}" />
+            </p:column>
+
+            <f:facet name="footer">
+                <p:commandButton process="@this checkboxDT @form" update="@form" icon="ui-icon-search" value="Carregar" oncomplete="#{graficoInterativoController.carregarGrafico()}" />
+            </f:facet>
+        </p:dataTable>
+
+        <br/>
+        <br/>
+
+        <p:panelGrid columns="1" id="graficoPanel" rendered="#{graficoInterativoController.linhasSelecionadasList.size() > 0}">
+
+            <!--<p:chart type="line" model="#{graficoController.lineModel1}" style="height:300px;"/>-->
+
+            <!--<p:chart type="line" model="#{graficoController.lineModel2}" style="height:300px;"/>-->
+
+            <p:chart type="line" model="#{graficoInterativoController.graficoLinha.grafico}" style="height:300px;"/>
+
+            <!--<p:chart type="line" model="#{graficoInterativoController.graficoLinha2.grafico}" style="height:300px;"/>-->
+
+        </p:panelGrid>
+    </h:form>
+
+
+</h:body>
+</html>

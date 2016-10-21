@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"   >
+
+<h:head>
+
+</h:head>
+<h:body>
+
+	<ui:include src="menu.xhtml" />
+	<h:form>
+	
+	<p:messages />
+			Perfil:
+			<p:selectOneMenu value="#{usuarioController.usuario.perfil}" converter="#{perfilConverter}">
+				<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true" />
+				<f:selectItems value="#{perfilController.perfils}" var="p" itemLabel="#{p.descricao}"/>
+				
+			</p:selectOneMenu>
+				
+			Nome:
+			<p:inputText value="#{usuarioController.usuario.nome}" />
+			
+			Login:
+			<p:inputText value="#{usuarioController.usuario.login}" />
+			
+			Senha:
+			<p:inputText value="#{usuarioController.usuario.senha}" />
+
+		<p:commandButton actionListener="#{usuarioController.salvar()}"
+			value="Salvar" update="@form" />
+
+
+		<p:dataTable value="#{usuarioController.usuarios}" var="u" border="1">
+
+			<p:column headerText="ID">
+				<h:outputText value="#{u.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{u.nome}" />
+			</p:column>
+
+			<p:column headerText="Login">
+				<h:outputText value="#{u.login}" />
+			</p:column>
+
+			<p:column headerText="Senha">
+				<h:outputText value="#{u.senha}" />
+			</p:column>
+
+
+			<p:column headerText="Perfil">
+				<h:outputText value="#{u.perfil.descricao}" />
+			</p:column>
+
+			<p:column headerText="Ações">
+				<p:commandButton actionListener="#{usuarioController.excluir(u)}"
+					value="Excluir" />
+					
+					<p:commandButton actionListener="#{usuarioController.editar(u)}"
+					value="Editar" update="@form" />
+			</p:column>
+
+
+		</p:dataTable>
+	</h:form>
+
+</h:body>
+</html>

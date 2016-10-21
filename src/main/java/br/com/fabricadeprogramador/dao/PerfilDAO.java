@@ -9,22 +9,22 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.fabricadeprogramador.entidade.Usuario;
+import br.com.fabricadeprogramador.entidade.Perfil;
 
-@Repository(value="usuarioDAO")
-public class UsuarioDAO implements DAO<Usuario> {
+@Repository(value="perfilDAO")
+public class PerfilDAO implements DAO<Perfil> {
 	
 	@PersistenceContext
 	private EntityManager em;
 	
-	public UsuarioDAO() {
+	public PerfilDAO() {
 		System.out.println("Instanciando...");
 	}
 	
 	@Transactional
-	public Usuario salvar(Usuario usuario) throws DAOException{
+	public Perfil salvar(Perfil perfil) throws DAOException{
 		try{
-			return em.merge(usuario);
+			return em.merge(perfil);
 		}catch (Exception e ){
 			//Lancando exception encapsulando a causa
 			throw new DAOException(e);
@@ -32,26 +32,26 @@ public class UsuarioDAO implements DAO<Usuario> {
 	}
 	
 	@Transactional
-	public void excluir (Usuario usuario){
+	public void excluir (Perfil perfil){
 		//Tornando Managed
-		usuario = em.find(Usuario.class, usuario.getId());
-		em.remove(usuario);
+		perfil = em.find(Perfil.class, perfil.getId());
+		em.remove(perfil);
 	}
 	
-	public Usuario buscarPorId(int id){
-		return em.find(Usuario.class,id);// Select * from usuario where id=?
+	public Perfil buscarPorId(int id){
+		return em.find(Perfil.class,id);// Select * from perfil where id=?
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Usuario> buscarTodos (){
+	public List<Perfil> buscarTodos (){
 		//JPQL
-		Query query = em.createQuery("select u from Usuario u");
+		Query query = em.createQuery("select u from Perfil u");
 		return query.getResultList();
 	}
 	
 	public List<Object[]> buscarTodos2 (){
 		//JPQL
-		Query query = em.createQuery("select u.id, u.nome from Usuario u");
+		Query query = em.createQuery("select u.id, u.nome from Perfil u");
 		return query.getResultList();
 	}
 	
